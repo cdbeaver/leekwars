@@ -1,0 +1,54 @@
+/** Exporté le 5/21/2026, 1:59:30 PM **/
+
+/** Fighting Load **/
+
+/**
+ * Welcome to Leek Wars!
+ * To learn the game rules: leekwars.com/encyclopedia/en/Game_Rules
+ * To learn LeekScript: leekwars.com/encyclopedia/en/Tutorial
+**/
+
+// This is a very basic example:
+
+// We equip the pistol
+setWeapon(WEAPON_PISTOL) // Warning: costs 1 TP
+
+// We get the nearest enemy
+var enemy = getNearestEnemy()
+
+// Greet opponent on turn 1
+if (getTurn() == 1) {
+    say("Hi " + getName(enemy) + "!") // Warning: costs 1 TP
+}
+
+// We move toward the enemy
+//moveToward(enemy)
+
+// We try to shoot it!
+//useWeapon(enemy)
+
+// Heal if life is less than 75%
+if (getLife() < getTotalLife() * 0.75) {
+    useChip(CHIP_BANDAGE)
+}
+
+function getClosestCellToUseWeapon(enemy) {
+    var closest = null
+    var minDistance = 999
+    for (var cell in getCellsToUseWeapon(enemy)) {
+        var distance = getCellDistance(getCell(), cell)
+        if (distance != null and distance < minDistance) {
+            closest = cell
+            minDistance = distance            
+        }
+    }
+    return closest
+}
+
+// We move toward the closest usage cell
+var closest = getClosestCellToUseWeapon(enemy)
+moveTowardCell(closest)
+
+for (var i = 0; i < 4; i++) {
+    useWeapon(enemy)
+}
